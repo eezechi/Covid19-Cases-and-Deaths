@@ -1,0 +1,49 @@
+--- Countries with Highest Infection Rate compared to Population
+
+SELECT location, population, MAX(total_cases) AS HighestInfectionCount, MAX(total_cases/population)*100 as PercentPopulationInfected
+FROM `health-project-376402.Covid19_file.Covid death`
+---where location = 'United States'
+GROUP BY location, population
+ORDER By 4 DESC
+
+
+
+---Countries with Highest Death Count Per Population
+
+SELECT location, MAX(total_deaths) AS TotalDeathCount 
+FROM `health-project-376402.Covid19_file.Covid death`
+---where location = 'United States'
+WHERE continent is not null
+GROUP BY location
+ORDER BY 2 DESC
+
+
+
+--- Continent with the Highest Death Count per Population
+
+SELECT location, MAX(total_deaths) AS TotalDeathCount 
+FROM `health-project-376402.Covid19_file.Covid death`
+---where location = 'United States'
+WHERE continent is null
+GROUP BY location
+ORDER BY 2 DESC
+
+
+---Global Numbers
+
+SELECT date, SUM(new_cases) as total_cases, SUM(new_deaths) as total_deaths, SUM(new_deaths)/SUM(new_cases)*100 as DeathPercentage
+FROM `health-project-376402.Covid19_file.Covid death`
+---Where location = 'United States'
+WHERE continent is not null
+GROUP BY date
+ORDER BY 1,2 DESC
+
+
+---Showing total cases and total death
+
+SELECT SUM(new_cases) as total_cases, SUM(new_deaths) as total_deaths, SUM(new_deaths)/SUM(new_cases)*100 as DeathPercentage
+FROM `health-project-376402.Covid19_file.Covid death`
+---Where location = 'United States'
+WHERE continent is not null
+--GROUP BY date
+ORDER BY 1,2 DESC
